@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GDPR Foundations for Engineers — 2-Week Training</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --brand: #1F4E79;
+  --accent: #2E75B6;
+  --accent-light: #D6E4F0;
+  --teal: #0F6E56;
+  --teal-light: #E1F5EE;
+  --amber: #7F6000;
+  --amber-light: #FFF2CC;
+  --red: #833C00;
+  --red-light: #FCE4D6;
+  --purple: #3C3489;
+  --purple-light: #EEEDFE;
+  --green: #1D6B3A;
+  --green-light: #E2F0D9;
+  --gray-50: #F8F9FA;
+  --gray-100: #F1F3F5;
+  --gray-200: #E9ECEF;
+  --gray-400: #868E96;
+  --gray-600: #495057;
+  --gray-800: #212529;
+  --white: #FFFFFF;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.10);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
+  --radius: 10px;
+  --radius-lg: 16px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: #F0F4F8;
+  color: var(--gray-800);
+  line-height: 1.7;
+}
+
+/* HERO */
+.hero {
+  background: linear-gradient(135deg, var(--brand) 0%, #0D2D4E 60%, #07192C 100%);
+  color: white;
+  padding: 80px 0 60px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Ccircle cx='30' cy='30' r='20'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.hero-inner { max-width: 960px; margin: 0 auto; padding: 0 32px; position: relative; }
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+  padding: 6px 14px; border-radius: 20px;
+  font-size: 12px; font-weight: 600; letter-spacing: 0.08em;
+  text-transform: uppercase; color: rgba(255,255,255,0.9);
+  margin-bottom: 20px;
+}
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(36px, 5vw, 56px);
+  font-weight: 700;
+  line-height: 1.15;
+  margin-bottom: 16px;
+  color: white;
+}
+.hero h1 span { color: #93C5FD; }
+.hero-sub {
+  font-size: 18px; color: rgba(255,255,255,0.75);
+  max-width: 600px; margin-bottom: 36px; line-height: 1.6;
+}
+.hero-pills {
+  display: flex; flex-wrap: wrap; gap: 10px;
+}
+.hero-pill {
+  background: rgba(255,255,255,0.10);
+  border: 1px solid rgba(255,255,255,0.18);
+  padding: 7px 16px; border-radius: 20px;
+  font-size: 13px; color: rgba(255,255,255,0.85);
+  display: flex; align-items: center; gap: 6px;
+}
+.hero-pill svg { width: 14px; height: 14px; opacity: 0.7; }
+
+/* PILLARS STRIP */
+.pillars-strip {
+  background: white;
+  box-shadow: var(--shadow-md);
+  padding: 28px 0;
+}
+.pillars-inner {
+  max-width: 960px; margin: 0 auto; padding: 0 32px;
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px;
+}
+.pillar-card {
+  text-align: center; padding: 16px 12px;
+  border-radius: var(--radius);
+  border: 1.5px solid var(--gray-200);
+  transition: all 0.2s;
+}
+.pillar-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.pillar-icon {
+  width: 40px; height: 40px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 10px; font-size: 20px;
+}
+.pillar-name { font-size: 13px; font-weight: 600; color: var(--gray-800); }
+.pillar-art { font-size: 11px; color: var(--gray-400); margin-top: 2px; }
+
+/* LAYOUT */
+.container { max-width: 960px; margin: 0 auto; padding: 0 32px; }
+.section { padding: 48px 0; }
+
+/* WEEK TABS */
+.week-nav {
+  display: flex; gap: 4px; margin-bottom: 32px;
+  background: white; padding: 6px;
+  border-radius: var(--radius-lg); box-shadow: var(--shadow-sm);
+  width: fit-content;
+}
+.week-tab {
+  padding: 10px 24px; border-radius: 10px;
+  font-size: 14px; font-weight: 500; cursor: pointer;
+  transition: all 0.2s; color: var(--gray-600);
+  border: none; background: none;
+}
+.week-tab.active {
+  background: var(--brand); color: white;
+  box-shadow: var(--shadow-sm);
+}
+
+.week-panel { display: none; }
+.week-panel.active { display: block; }
+
+/* DAY CARDS */
+.day-card {
+  background: white; border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 16px;
+  border: 1px solid var(--gray-200);
+  overflow: hidden;
+  transition: box-shadow 0.2s;
+}
+.day-card:hover { box-shadow: var(--shadow-md); }
+
+.day-toggle {
+  display: flex; align-items: center; gap: 16px;
+  padding: 20px 24px; cursor: pointer;
+  user-select: none; width: 100%;
+  background: none; border: none; text-align: left;
+}
+.day-badge {
+  width: 44px; height: 44px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700; flex-shrink: 0;
+  font-family: 'DM Mono', monospace;
+}
+.day-info { flex: 1; }
+.day-title { font-size: 15px; font-weight: 600; color: var(--gray-800); }
+.day-sub { font-size: 12px; color: var(--gray-400); margin-top: 2px; }
+.day-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+.day-tag {
+  font-size: 10px; font-weight: 600; padding: 3px 8px;
+  border-radius: 6px; letter-spacing: 0.04em; text-transform: uppercase;
+}
+.chevron-icon {
+  width: 20px; height: 20px; color: var(--gray-400);
+  transition: transform 0.25s; flex-shrink: 0;
+}
+.chevron-icon.open { transform: rotate(180deg); }
+
+.day-body { display: none; border-top: 1px solid var(--gray-100); }
+.day-body.open { display: block; }
+.day-body-inner { padding: 24px; }
+
+.section-label {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--gray-400);
+  margin-bottom: 12px; margin-top: 24px;
+  display: flex; align-items: center; gap: 8px;
+}
+.section-label::after {
+  content: ''; flex: 1; height: 1px; background: var(--gray-200);
+}
+
+/* INTRO TEXT */
+.intro-text {
+  font-size: 14px; color: var(--gray-600); line-height: 1.7;
+  background: var(--gray-50); border-radius: var(--radius);
+  padding: 16px 18px;
+  border-left: 3px solid var(--accent);
+}
+
+/* CONCEPTS GRID */
+.concepts-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+}
+.concept-cell {
+  background: var(--gray-50);
+  border-radius: var(--radius); padding: 14px 16px;
+  border: 1px solid var(--gray-200);
+}
+.concept-cell h4 { font-size: 13px; font-weight: 600; color: var(--brand); margin-bottom: 5px; }
+.concept-cell p { font-size: 13px; color: var(--gray-600); line-height: 1.6; }
+
+/* ARCH NOTE */
+.arch-note {
+  border-radius: var(--radius);
+  padding: 16px 18px;
+}
+.arch-note.code {
+  background: #0D1117;
+  font-family: 'DM Mono', monospace;
+  font-size: 12px; color: #C9D1D9;
+  line-height: 1.7; white-space: pre-wrap;
+}
+.arch-note.text {
+  background: var(--gray-50);
+  font-size: 13px; color: var(--gray-600);
+  line-height: 1.7; border: 1px solid var(--gray-200);
+  border-left: 3px solid var(--teal);
+}
+.arch-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--teal);
+  margin-bottom: 8px;
+}
+
+/* RESOURCES */
+.resources-list { display: flex; flex-direction: column; gap: 8px; }
+.resource-link {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 12px 14px;
+  border: 1px solid var(--gray-200); border-radius: var(--radius);
+  text-decoration: none; color: inherit;
+  transition: all 0.15s;
+}
+.resource-link:hover {
+  background: var(--gray-50);
+  border-color: var(--accent);
+  transform: translateX(2px);
+}
+.res-type-badge {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.06em;
+  padding: 3px 8px; border-radius: 6px; flex-shrink: 0;
+  margin-top: 2px; text-transform: uppercase;
+}
+.badge-video { background: #FEE2E2; color: #991B1B; }
+.badge-article { background: #DBEAFE; color: #1E40AF; }
+.res-title { font-size: 13px; font-weight: 500; color: var(--accent); }
+.res-meta { font-size: 11px; color: var(--gray-400); margin-top: 2px; }
+.res-arrow { margin-left: auto; color: var(--gray-400); flex-shrink: 0; margin-top: 2px; }
+
+/* QUIZ */
+.quiz-block {
+  background: #FFFBEB; border: 1px solid #FDE68A;
+  border-radius: var(--radius); padding: 14px 16px;
+  border-left: 3px solid #F59E0B;
+}
+.quiz-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; color: #B45309; margin-bottom: 6px;
+}
+.quiz-block p { font-size: 13px; color: #78350F; line-height: 1.6; font-style: italic; }
+
+/* OVERVIEW TABLE */
+.overview-table {
+  width: 100%; border-collapse: collapse;
+  background: white; border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm); overflow: hidden;
+}
+.overview-table th {
+  background: var(--brand); color: white;
+  padding: 12px 16px; font-size: 12px;
+  font-weight: 600; text-align: left; letter-spacing: 0.04em;
+}
+.overview-table td { padding: 11px 16px; font-size: 13px; color: var(--gray-700); border-top: 1px solid var(--gray-100); }
+.overview-table tr:nth-child(even) td { background: var(--gray-50); }
+.day-dot {
+  display: inline-flex; width: 24px; height: 24px; border-radius: 6px;
+  align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700; color: white;
+}
+
+/* ALL RESOURCES PAGE */
+.resources-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+}
+.res-full-card {
+  display: flex; flex-direction: column; gap: 4px;
+  padding: 14px 16px;
+  border: 1px solid var(--gray-200); border-radius: var(--radius);
+  background: white; text-decoration: none; color: inherit;
+  transition: all 0.15s;
+}
+.res-full-card:hover { box-shadow: var(--shadow-md); border-color: var(--accent); }
+.res-full-header { display: flex; align-items: center; gap: 8px; }
+.res-full-title { font-size: 13px; font-weight: 600; color: var(--accent); line-height: 1.4; }
+.res-full-meta { font-size: 11px; color: var(--gray-400); }
+.res-full-day {
+  font-size: 10px; font-weight: 600; padding: 2px 7px;
+  border-radius: 6px; background: var(--accent-light);
+  color: var(--brand); margin-left: auto; flex-shrink: 0;
+}
+
+/* FOOTER */
+footer {
+  background: var(--brand); color: rgba(255,255,255,0.6);
+  text-align: center; padding: 32px;
+  font-size: 13px; margin-top: 48px;
+}
+footer strong { color: white; }
+
+/* COLOR SCHEMES */
+.c-blue  { background: #D6E4F0; color: #1F4E79; }
+.c-purple{ background: #EEEDFE; color: #3C3489; }
+.c-teal  { background: #E1F5EE; color: #0F6E56; }
+.c-amber { background: #FFF2CC; color: #7F6000; }
+.c-red   { background: #FCE4D6; color: #833C00; }
+.c-green { background: #E2F0D9; color: #1D6B3A; }
+.t-blue  { color: #1F4E79; }
+.t-purple{ color: #3C3489; }
+.t-teal  { color: #0F6E56; }
+.t-amber { color: #7F6000; }
+.t-red   { color: #833C00; }
+.t-green { color: #1D6B3A; }
+
+@media (max-width: 700px) {
+  .pillars-inner { grid-template-columns: repeat(3, 1fr); }
+  .concepts-grid { grid-template-columns: 1fr; }
+  .resources-grid { grid-template-columns: 1fr; }
+  .hero h1 { font-size: 30px; }
+  .day-toggle { padding: 14px 16px; }
+  .day-body-inner { padding: 16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      Privacy Engineering Training
+    </div>
+    <h1>GDPR Foundations<br><span>for Engineers</span></h1>
+    <p class="hero-sub">A 2-week, concept-first program covering the five core GDPR pillars every engineer needs to build privacy-compliant systems.</p>
+    <div class="hero-pills">
+      <span class="hero-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>10 Learning Days</span>
+      <span class="hero-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>60–90 min/day</span>
+      <span class="hero-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>Engineer-focused</span>
+      <span class="hero-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>EU / UK GDPR</span>
+      <span class="hero-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>5 Core Pillars</span>
+    </div>
+  </div>
+</section>
+
+<!-- PILLARS STRIP -->
+<div class="pillars-strip">
+  <div class="pillars-inner">
+    <div class="pillar-card">
+      <div class="pillar-icon" style="background:#D6E4F0">📋</div>
+      <div class="pillar-name">ROPA</div>
+      <div class="pillar-art">Art. 30</div>
+    </div>
+    <div class="pillar-card">
+      <div class="pillar-icon" style="background:#E1F5EE">👤</div>
+      <div class="pillar-name">DSAR</div>
+      <div class="pillar-art">Art. 15–22</div>
+    </div>
+    <div class="pillar-card">
+      <div class="pillar-icon" style="background:#FFF2CC">🎯</div>
+      <div class="pillar-name">Purpose Limitation</div>
+      <div class="pillar-art">Art. 5(1)(b)</div>
+    </div>
+    <div class="pillar-card">
+      <div class="pillar-icon" style="background:#EEEDFE">✈️</div>
+      <div class="pillar-name">Cross-Border Transfers</div>
+      <div class="pillar-art">Chapter V</div>
+    </div>
+    <div class="pillar-card">
+      <div class="pillar-icon" style="background:#FCE4D6">⚖️</div>
+      <div class="pillar-name">Data Minimization</div>
+      <div class="pillar-art">Art. 5(1)(c)(e)</div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="container section">
+
+  <!-- OVERVIEW TABLE -->
+  <h2 style="font-size:22px;font-weight:600;color:var(--brand);margin-bottom:20px">Program Overview</h2>
+  <table class="overview-table">
+    <thead>
+      <tr>
+        <th style="width:70px">Day</th>
+        <th>Topic</th>
+        <th>GDPR Article(s)</th>
+        <th>Key Concept</th>
+        <th style="width:80px">Week</th>
+      </tr>
+    </thead>
+    <tbody id="overview-tbody"></tbody>
+  </table>
+
+  <!-- WEEK TABS + DAYS -->
+  <div style="margin-top:48px">
+    <div class="week-nav" role="tablist">
+      <button class="week-tab active" onclick="showWeek(1)" role="tab">Week 1 — Foundations</button>
+      <button class="week-tab" onclick="showWeek(2)" role="tab">Week 2 — Applied Engineering</button>
+      <button class="week-tab" onclick="showWeek(0)" role="tab">All Resources</button>
+    </div>
+
+    <div id="week1-panel" class="week-panel active"></div>
+    <div id="week2-panel" class="week-panel"></div>
+    <div id="resources-panel" class="week-panel"></div>
+  </div>
+</div>
+
+<footer>
+  <strong>GDPR Foundations for Engineers</strong> &nbsp;·&nbsp; 2-Week Training Program &nbsp;·&nbsp; EU/UK GDPR Reference Material<br>
+  <span style="font-size:12px;margin-top:6px;display:block">Always verify regulatory content against the latest official guidance from the ICO and EDPB.</span>
+</footer>
+
+<script>
+const DAYS = [
+  {
+    week:1, day:1, color:'blue',
+    topic:"GDPR at a Glance — Why it matters for engineers",
+    sub:"Regulation scope, territorial reach, key definitions",
+    article:"GDPR (Regulation EU 2016/679) governs how personal data is collected, stored, and processed. For engineers, it is a set of hard constraints on system architecture, data models, and API design. Non-compliance carries fines up to 4% of global annual turnover or EUR 20 million, whichever is higher.",
+    art:"Art. 3, 4", kc:"Scope & Definitions",
+    concepts:[
+      {t:"What is GDPR?",b:"Regulation (EU) 2016/679. Applies to any system processing personal data of EU/UK residents — regardless of where your servers are hosted."},
+      {t:"Personal Data Definition",b:"Any information relating to an identified or identifiable natural person — IDs, IP addresses, location, behavioral signals, inferred attributes."},
+      {t:"Territorial Scope (Art. 3)",b:"Applies if you offer goods/services to EU persons OR monitor their behavior. Your US-hosted API still falls under GDPR."},
+      {t:"Controller vs Processor",b:"Controller decides WHY and HOW data is processed. Processor acts on behalf. Engineers often build systems that make their org a processor."}
+    ],
+    archText:"Engineering insight: Think of GDPR as a set of constraints on your data model. Every field storing personal data must have a lawful basis, a retention limit, and a documented purpose. Design these in from the start — retrofitting compliance is 10x more expensive.",
+    resources:[
+      {type:"video",t:"GDPR Crash Course — Master Privacy in 2 Hours (Full Coverage)",m:"Shalini Garg, CIPP/E · YouTube · 2 hrs",u:"https://www.youtube.com/watch?v=7X8bd1poAdk"},
+      {type:"article",t:"GDPR Full Annotated Text — All 99 Articles with Recitals",m:"gdpr-info.eu · Official text + commentary · ~90 min read",u:"https://gdpr-info.eu/"},
+      {type:"article",t:"GDPR Compliance in 2026: The Complete Technical Guide",m:"SecurePrivacy · Comprehensive 2026 update · ~60 min read",u:"https://secureprivacy.ai/blog/gdpr-compliance-2026"}
+    ],
+    quiz:"Your microservice enriches user profiles using third-party data. Your company is the controller. What two questions must be answered before any enrichment can happen?"
+  },
+  {
+    week:1, day:2, color:'purple',
+    topic:"Lawful Bases & Consent — The permission model",
+    sub:"Art. 6 legal bases, consent mechanics, legitimate interest",
+    article:"Article 6 defines six lawful bases for processing personal data. No processing is lawful unless it rests on one. Engineers must ensure every processing activity in their codebase is mapped to a documented legal basis before data is touched.",
+    art:"Art. 6, 9", kc:"Lawful Bases",
+    concepts:[
+      {t:"6 Lawful Bases (Art. 6)",b:"Consent, Contract, Legal obligation, Vital interest, Public task, Legitimate interest. Every processing activity must map to exactly one."},
+      {t:"Consent Requirements",b:"Must be freely given, specific, informed, and unambiguous. Pre-ticked boxes are invalid. Withdrawal must be as easy as giving consent."},
+      {t:"Legitimate Interest (LIA)",b:"Most flexible but requires a 3-part test: purpose, necessity, and balancing. Cannot override individual rights. Requires a documented LIA."},
+      {t:"Special Category Data (Art. 9)",b:"Health, biometrics, ethnicity, political views need an Art. 9(2) basis ON TOP of an Art. 6 basis — a double lock system."}
+    ],
+    archText:"Engineering insight: Store lawful basis as metadata with every data collection event. Your consent store should record the timestamp, mechanism, version of notice shown, and scope accepted. This is your audit trail.",
+    resources:[
+      {type:"video",t:"Get Data Protection Fit — Grounds for Processing Personal Data (All 6 Lawful Bases)",m:"Fieldfisher Data &amp; Privacy Team (Law Firm) · YouTube · ~40 min",u:"https://www.youtube.com/watch?v=OikqNDUaqqw"},
+      {type:"article",t:"ICO Guide to Lawful Bases",m:"ico.org.uk · Comprehensive",u:"https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/lawful-basis/a-guide-to-lawful-basis/"},
+      {type:"article",t:"IAPP: The Legitimate Interest of a Controller — Full Analysis",m:"IAPP · In-depth practitioner analysis · ~60 min read",u:"https://iapp.org/resources/article/the-legitimate-interest-of-a-controller-under-the-gdpr/"}
+    ],
+    quiz:"Your analytics pipeline uses behavioral tracking. You want to use Legitimate Interest. What three things must you document before your first deploy?"
+  },
+  {
+    week:1, day:3, color:'teal',
+    topic:"ROPA — Records of Processing Activities",
+    sub:"Art. 30, data inventory, system-level mapping",
+    article:"Article 30 requires organizations to maintain written records of all data processing activities. ROPA is a living inventory that must be updated as systems change. Each microservice or data pipeline should map to one or more ROPA entries.",
+    art:"Art. 30", kc:"ROPA Architecture",
+    concepts:[
+      {t:"What is ROPA?",b:"A living document cataloging every processing activity. Art. 30 mandates it for organizations with >250 employees or processing high-risk/special category data."},
+      {t:"Required ROPA Fields",b:"Controller name, purpose, data categories, data subjects, recipients, retention periods, cross-border transfer details, security measures."},
+      {t:"ROPA at System Level",b:"Each microservice or pipeline maps to a ROPA entry. Think: input data → transformation → output → destination → retention schedule."},
+      {t:"Dynamic vs Static ROPA",b:"Static ROPA becomes stale fast. Best practice: auto-generate entries from code annotations, schema metadata, or data catalog tags."}
+    ],
+    archCode:`@ProcessingActivity(
+  purpose = "fraud_detection",
+  legalBasis = "LEGITIMATE_INTEREST",
+  dataCategories = ["TRANSACTION", "IP"],
+  retention = "P90D",
+  recipients = ["INTERNAL"]
+)`,
+    resources:[
+      {type:"video",t:"Get Data Protection Fit — Record of Processing Activities (ROPA) Full Session",m:"Fieldfisher Data &amp; Privacy Team (Law Firm) · YouTube · ~35 min",u:"https://www.youtube.com/watch?v=BN9H6Rtt9PQ"},
+      {type:"article",t:"ICO: Records of Processing Activities Guide",m:"ICO (UK) · Technical guidance · ~60 min read",u:"https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/accountability-and-governance/guide-to-accountability-and-governance/accountability-and-governance/records-of-processing-activities/"},
+      {type:"article",t:"ICO Accountability &amp; Governance Guide — ROPA, Documentation &amp; Audit Trails",m:"ICO (UK) · Official guidance · ~75 min read",u:"https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/accountability-and-governance/guide-to-accountability-and-governance/"}
+    ],
+    quiz:"Your team is launching a recommendation engine ingesting purchase history, browsing data, and demographic inferences. Which ROPA fields change, and who must sign off?"
+  },
+  {
+    week:1, day:4, color:'amber',
+    topic:"Purpose Limitation — Engineering specificity",
+    sub:"Art. 5(1)(b), compatible purposes, mission creep prevention",
+    article:"Article 5(1)(b) requires personal data to be collected for specified, explicit, and legitimate purposes and not further processed incompatibly. For engineers, purpose must be enforced architecturally — not just documented.",
+    art:"Art. 5(1)(b)", kc:"Purpose Enforcement",
+    concepts:[
+      {t:"Core Principle",b:"Data collected for purpose A cannot be silently reused for purpose B. The new purpose must be compatible or require fresh consent."},
+      {t:"Compatibility Test",b:"Factors: link between purposes, context of collection, nature of data, consequences for data subjects, and existence of safeguards."},
+      {t:"Siloed Architecture Pattern",b:"Enforce purpose at the schema level. Tag columns with purpose codes. Your query layer rejects cross-purpose joins without an approved exception record."},
+      {t:"ML Model Risk",b:"Training a fraud model on customer support transcripts is scope creep. Embeddings trained on one purpose can encode signals for another — document and review."}
+    ],
+    archText:"Purpose enforcement pattern: annotate datasets with allowed_purposes[]. Any downstream consumer must declare their purpose at query time. The data access layer validates against the allow-list and logs the access with purpose context for the audit trail.",
+    resources:[
+      {type:"video",t:"Get Data Protection Fit — Legitimate Interest Assessments &amp; Purpose Limitation",m:"Fieldfisher Data &amp; Privacy Team (Law Firm) · YouTube · ~45 min",u:"https://www.youtube.com/watch?v=IfezpaugVKY"},
+      {type:"article",t:"EDPB Guidelines on Purpose Limitation",m:"edpb.europa.eu · Official",u:"https://www.edpb.europa.eu/sites/default/files/files/file1/edpb_guidelines_purposes_en.pdf"},
+      {type:"article",t:"IAPP: Data Minimization — An Increasingly Global Concept",m:"IAPP · Deep policy analysis · ~60 min read",u:"https://iapp.org/news/a/data-minimization-an-increasingly-global-concept"}
+    ],
+    quiz:"You collected email addresses for transactional alerts. The marketing team wants to add them to a re-engagement campaign. Walk through the compatibility test step-by-step."
+  },
+  {
+    week:1, day:5, color:'red',
+    topic:"Data Minimization & Storage Limitation",
+    sub:"Art. 5(1)(c) & (e), collection hygiene, retention schedules",
+    article:"Articles 5(1)(c) and 5(1)(e) require personal data to be adequate, relevant, and limited to what is necessary, and kept no longer than needed. Together these reduce the blast radius of any data breach.",
+    art:"Art. 5(1)(c)(e)", kc:"Retention Controls",
+    concepts:[
+      {t:"Minimization Principle (Art. 5(1)(c))",b:"Collect only what is adequate, relevant, and necessary. Not 'collect everything, filter later' — that approach violates GDPR by design."},
+      {t:"Storage Limitation (Art. 5(1)(e))",b:"Personal data cannot be kept longer than necessary. Retention periods must be in ROPA and enforced by automated purge jobs."},
+      {t:"Pseudonymisation",b:"Replacing direct identifiers with tokens. Still personal data, but with reduced breach risk. The key-mapping file is the highest-value asset to protect."},
+      {t:"Anonymisation Threshold",b:"True anonymisation (k-anonymity ≥5, differential privacy) releases data from GDPR scope. Must be irreversible — reversible transformation is pseudonymisation."}
+    ],
+    archText:"Retention enforcement pattern: every personal data table gets created_at and purpose_expires_at columns. A nightly purge job deletes or anonymises rows past expiry. Purge events are logged without PII for audit purposes. Add this retroactively to legacy tables via schema migrations.",
+    resources:[
+      {type:"video",t:"Get Data Protection Fit — Article 30 Records, Data Minimization &amp; Storage Limitation",m:"Martin, Privacy Practitioner · YouTube",u:"https://www.youtube.com/watch?v=MqSRLR3xjaQ"},
+      {type:"article",t:"ICO Anonymisation &amp; Pseudonymisation — Full Technical Code of Practice",m:"ICO (UK) · Technical guidance · ~60 min read",u:"https://ico.org.uk/media/about-the-ico/documents/4018606/chapter-2-anonymisation-and-pseudonymisation.pdf"},
+      {type:"article",t:"Anonymisation & Pseudonymisation — ICO Draft Code",m:"ico.org.uk · Technical",u:"https://ico.org.uk/media/about-the-ico/documents/4018606/chapter-2-anonymisation-and-pseudonymisation.pdf"}
+    ],
+    quiz:"Your mobile app collects precise GPS coordinates every 30 seconds for navigation. What minimization controls should be applied at collection, storage, and deletion?"
+  },
+  {
+    week:2, day:6, color:'blue',
+    topic:"DSAR — Data Subject Access Requests",
+    sub:"Art. 15–22, eight rights, response architecture, 30-day SLA",
+    article:"Articles 15–22 grant individuals eight distinct rights over their personal data. For engineering teams, these translate into system requirements: every data store must be queryable, every deletion must cascade provably, and portability exports must be machine-readable.",
+    art:"Art. 15–22", kc:"DSAR Pipeline",
+    concepts:[
+      {t:"8 Data Subject Rights",b:"Access (Art.15), Rectification (Art.16), Erasure (Art.17), Restriction (Art.18), Portability (Art.20), Object (Art.21), Profiling opt-out, DPA complaint."},
+      {t:"Right of Access in Detail",b:"Subject can request all personal data held, plus purposes, recipients, retention periods, and whether automated decision-making applies."},
+      {t:"Right to Erasure (RTBF)",b:"Triggers: consent withdrawn, no longer necessary, unlawfully processed. Exceptions: legal claims, research, freedom of expression. Not absolute."},
+      {t:"Response SLA",b:"1 month (30 days) default. Extendable by 2 months for complex requests — must notify within the first month with the reason for extension."}
+    ],
+    archText:"DSAR engineering stack: (1) Intake portal with identity verification. (2) Data discovery across all stores — relational, blob, warehouse, logs. (3) Redaction engine to remove third-party data before export. (4) Complete audit trail of every workflow step. (5) Deletion verification confirming cascade deletes and backup purges.",
+    resources:[
+      {type:"video",t:"Webinar — How to Respond to a Data Subject Access Request (DSAR) — Full Recording",m:"Bird &amp; Bird Law · YouTube · 2020 · 1.5 hr comprehensive webinar",u:"https://www.youtube.com/watch?v=X2vOa-iAuLE"},
+      {type:"video",t:"Data Subject Rights Under GDPR — What Individuals Can Request (Full Webinar)",m:"Martin, Privacy Practitioner · YouTube",u:"https://www.youtube.com/watch?v=Wl0tCqy_sHo"},
+      {type:"article",t:"ICO: Individual Rights — Full Guidance Hub",m:"ICO (UK) · Technical guidance · ~60 min read",u:"https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/individual-rights/"},
+      {type:"article",t:"ICO Individual Rights Hub — All 8 Rights with Practical Guidance &amp; Worked Examples",m:"ICO (UK) · Official guidance · ~90 min read",u:"https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/individual-rights/"}
+    ],
+    quiz:"A user submits an erasure request. Their data exists in PostgreSQL, Elasticsearch, S3 raw event logs, a BI data warehouse, and encrypted backups. Describe the deletion cascade."
+  },
+  {
+    week:2, day:7, color:'purple',
+    topic:"Cross-Border Data Transfers",
+    sub:"Chapter V GDPR, SCCs, adequacy decisions, TIAs, Schrems II",
+    article:"Chapter V restricts transfer of personal data outside the EEA unless adequate protections are in place. Following Schrems II (2020), engineers must understand the legal mechanisms — and their fragility — before any data crosses a border.",
+    art:"Chapter V", kc:"SCCs & TIAs",
+    concepts:[
+      {t:"What Triggers a Transfer?",b:"Any transmission to a country outside the EEA — API calls, replication, email. Includes sub-processors like AWS us-east-1 or Salesforce US."},
+      {t:"Adequacy Decisions",b:"Countries deemed adequate by the EC (UK, Israel, Japan, South Korea, NZ, etc.) require no additional safeguards. Always verify the current list."},
+      {t:"Standard Contractual Clauses (SCCs)",b:"The workhorse for non-adequate countries (USA, India, China). 2021 SCCs replace old versions. Must be signed, unmodified. C2C, C2P, P2C, P2P variants."},
+      {t:"Transfer Impact Assessment (TIA)",b:"Required alongside SCCs post-Schrems II. Assess whether destination country surveillance laws undermine the SCCs. Document legal landscape and mitigations."}
+    ],
+    archText:"Third-party API integration checklist: (1) Is the vendor's server in an EEA/adequate country? (2) Is a DPA signed? (3) Are SCCs appended? (4) Has a TIA been conducted? (5) What sub-processors does the vendor use? All five must be green before first deploy.",
+    resources:[
+      {type:"video",t:"International Data Transfers After Schrems II — EDPB Recommendations &amp; New SCCs",m:"Bird &amp; Bird Law · YouTube · 2020 · 1.5 hr comprehensive webinar",u:"https://www.youtube.com/watch?v=s7t-H144iBQ"},
+      {type:"article",t:"EDPB Recommendations on Supplementary Measures (Schrems II)",m:"edpb.europa.eu · Official",u:"https://www.edpb.europa.eu/our-work-tools/our-documents/recommendations/recommendations-012020-measures-supplement-transfer_en"},
+      {type:"article",t:"International Transfers After Schrems II: Practical Compliance Steps — Pinsent Masons",m:"Pinsent Masons Out-Law · Comprehensive legal guide · ~60 min read",u:"https://www.pinsentmasons.com/out-law/guides/international-transfers-schrems-ii-gdpr"},
+      {type:"article",t:"International Data Transfers After Schrems II: Compliance Strategies for 2026",m:"DapriPro · Updated 2026 guide · ~60 min read",u:"https://dapripro.com/international-data-transfers-after-schrems-ii-compliance-strategies/"}
+    ],
+    quiz:"Your backend sends user PII to a US-based analytics vendor via REST API. The EU–US Data Privacy Framework is the claimed mechanism. Schrems III just invalidated it. What are your immediate technical options?"
+  },
+  {
+    week:2, day:8, color:'teal',
+    topic:"Privacy by Design & DPIAs",
+    sub:"Art. 25 & Art. 35, threat modeling, risk scoring",
+    article:"Article 25 requires privacy by design and by default — built into systems from inception. Article 35 mandates Data Protection Impact Assessments before processing likely to result in high risk. Both obligations have direct engineering implications.",
+    art:"Art. 25, 35", kc:"DPIAs & PbD",
+    concepts:[
+      {t:"Privacy by Design (PbD)",b:"7 principles by Ann Cavoukian. Key for engineers: privacy as default, end-to-end security, full functionality without false trade-offs, transparency."},
+      {t:"Data Protection by Default",b:"Art. 25(2): by default, only data necessary for each specific purpose is processed. Default settings must be privacy-protective — opt-in, not opt-out."},
+      {t:"DPIA Triggers (Art. 35)",b:"Required for: large-scale systematic monitoring, large-scale special categories, new technologies, profiling with significant effects. Must happen before processing."},
+      {t:"DPIA Structure",b:"Describe processing → assess necessity and proportionality → identify risks (likelihood × severity) → define mitigations → DPO consultation if residual risk is high."}
+    ],
+    archText:"Privacy threat model additions to standard STRIDE: add Linkability (can records be combined to re-identify?), Detectability (can attacker detect data existence?), Non-repudiation (can subjects prove processing?), and Unawareness (do subjects know processing is happening?).",
+    resources:[
+      {type:"video",t:"Get Data Protection Fit — Data Protection Impact Assessments (DPIAs) Full Session",m:"Fieldfisher Data &amp; Privacy Team (Law Firm) · YouTube · ~45 min",u:"https://www.youtube.com/watch?v=A-QyrV9viXU"},
+      {type:"article",t:"ICO DPIA Guidance and Screening Checklist",m:"ICO (UK) · Technical guidance · ~60 min read",u:"https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/accountability-and-governance/data-protection-impact-assessments-dpias/"},
+      {type:"article",t:"ICO DPIA Guidance — When Required, Screening, Template &amp; Worked Examples",m:"ICO (UK) · Official guidance · ~75 min read",u:"https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/accountability-and-governance/data-protection-impact-assessments-dpias/"}
+    ],
+    quiz:"Your team is building a real-time facial recognition attendance system. Identify three DPIA triggers, one likely high-risk finding, and two technical mitigations."
+  },
+  {
+    week:2, day:9, color:'red',
+    topic:"Data Breach — Detection, Response & Notification",
+    sub:"Art. 33–34, 72-hour rule, breach classification",
+    article:"Articles 33 and 34 impose strict notification obligations when a personal data breach occurs. Engineers play a dual role: building systems that detect breaches faster and designing architectures that reduce severity — and sometimes notifiability — of breaches.",
+    art:"Art. 33–34", kc:"Breach Response",
+    concepts:[
+      {t:"Definition of a Breach",b:"Security incident leading to accidental or unlawful destruction, loss, alteration, unauthorised disclosure of, or access to personal data."},
+      {t:"72-Hour Notification (Art. 33)",b:"If a breach is likely to result in risk to individuals, notify your lead supervisory authority within 72 hours of awareness."},
+      {t:"Risk vs High Risk",b:"Risk → notify DPA. High risk → notify DPA AND affected individuals. High risk includes financial loss, discrimination, reputational damage."},
+      {t:"Breach Notification Content",b:"Nature of breach, categories and approximate number of records, DPO contact, likely consequences, measures taken or proposed. Can be delivered in phases."}
+    ],
+    archText:"Engineering for breach detectability: (1) Structured audit logs for all data access. (2) Anomaly detection on data export volumes. (3) Encryption at rest reduces severity and may exempt notification. (4) Tokenization of PII in logs prevents log exfiltration from being a notifiable breach.",
+    resources:[
+      {type:"video",t:"Getting Started with GDPR Compliance: Data Breach Notification (Full Episode)",m:"OneTrust DPO Linda Thielova · YouTube · 2024 · Breach lifecycle",u:"https://www.youtube.com/watch?v=BykVcIsy1CM"},
+      {type:"article",t:"EDPB Guidelines on Personal Data Breach Notification",m:"edpb.europa.eu · Official",u:"https://www.edpb.europa.eu/our-work-tools/our-documents/guidelines/guidelines-9-2022-personal-data-breach-notification-under_en"},
+      {type:"article",t:"EDPB Guidelines 9/2022 — Personal Data Breach Notification Under GDPR",m:"European Data Protection Board · Official · ~90 min read",u:"https://www.edpb.europa.eu/our-work-tools/our-documents/guidelines/guidelines-9-2022-personal-data-breach-notification-under_en"}
+    ],
+    quiz:"At 3am your monitoring alerts that a misconfigured S3 bucket exposed 50,000 user email addresses for 6 hours. Walk through your breach response timeline for the next 72 hours."
+  },
+  {
+    week:2, day:10, color:'green',
+    topic:"Putting it Together — Engineering a Privacy-Compliant System",
+    sub:"End-to-end architecture review, patterns, anti-patterns, certifications",
+    article:"The final day ties all five pillars into a coherent engineering practice. Privacy engineering is not a checklist — it is a design discipline woven into the software development lifecycle from requirements through deployment.",
+    art:"Full Regulation", kc:"Privacy Engineering",
+    concepts:[
+      {t:"Privacy Engineering PR Checklist",b:"Does this PR add new PII fields? New third-party API calls? New retention behavior? New cross-border flow? If yes, privacy review required before merge."},
+      {t:"Common Anti-patterns",b:"Catch-all logging of request bodies, raw PII in analytics events, no TTL on session data, purpose-blind data lakes, sharing production dumps with developers."},
+      {t:"Privacy Enhancing Technologies",b:"Differential privacy, homomorphic encryption, synthetic data for testing, k-anonymity, federated learning. Each solves a different privacy engineering problem."},
+      {t:"Certification Paths",b:"CIPP/E (IAPP) — most recognized privacy cert for engineers. ISO 27701 — privacy information management extension to ISO 27001."}
+    ],
+    archText:"Privacy-safe pipeline pattern: Raw ingest → Pseudonymisation layer (PII → tokens) → Processing (token-based) → Aggregation (k-anonymity enforced) → Analytics (anonymised only). PII never crosses the pseudonymisation boundary into the analytics layer.",
+    resources:[
+      {type:"video",t:"Stanford Seminar — How Can Privacy Exist in a Data-Driven World?",m:"Stanford University / Blase Ur · YouTube · 2024 · 1 hr academic lecture",u:"https://www.youtube.com/watch?v=3F4YI9CpYeQ"},
+      {type:"article",t:"NIST Privacy Framework — Engineer's Guide",m:"nist.gov · Framework",u:"https://www.nist.gov/privacy-framework"},
+      {type:"article",t:"IAPP: Data Minimisation &amp; Privacy-Preserving Techniques in AI Systems",m:"IAPP · Technical analysis · ~60 min read",u:"https://iapp.org/resources/article/data-minimisation-and-privacy-preserving-techniques-in-ai-systems/"},
+      {type:"article",t:"NIST Privacy Framework 1.0 — Full Document with Core, Profiles &amp; Tiers",m:"NIST · Official framework · ~90 min read",u:"https://www.nist.gov/privacy-framework/privacy-framework-document"}
+    ],
+    quiz:"Design a data architecture for a financial app collecting transaction data. Address ROPA, purpose limitation, minimization, DSAR readiness, and cross-border transfer in one description."
+  }
+];
+
+const COLOR_CLASSES = { blue:'blue', purple:'purple', teal:'teal', amber:'amber', red:'red', green:'green' };
+const DOT_BG = { blue:'#1F4E79', purple:'#3C3489', teal:'#0F6E56', amber:'#7F6000', red:'#833C00', green:'#1D6B3A' };
+
+function buildOverview() {
+  const tbody = document.getElementById('overview-tbody');
+  DAYS.forEach(d => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><span class="day-dot" style="background:${DOT_BG[d.color]}">D${d.day}</span></td>
+      <td style="font-weight:500">${d.topic.split('—')[0].trim()}</td>
+      <td style="font-family:'DM Mono',monospace;font-size:12px">${d.art}</td>
+      <td>${d.kc}</td>
+      <td style="text-align:center"><span style="font-size:11px;font-weight:600;padding:3px 8px;border-radius:6px;background:${d.week===1?'#D6E4F0':'#E1F5EE'};color:${d.week===1?'#1F4E79':'#0F6E56'}">W${d.week}</span></td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function buildDayCard(d) {
+  const c = d.color;
+  const tagsHTML = `<span class="day-tag c-${c}">${d.art}</span>`;
+  const conceptsHTML = d.concepts.map(cv => `
+    <div class="concept-cell">
+      <h4 class="t-${c}">${cv.t}</h4>
+      <p>${cv.b}</p>
+    </div>
+  `).join('');
+  const archHTML = d.archCode
+    ? `<div class="arch-label">Code pattern</div><div class="arch-note code">${d.archCode}</div>`
+    : `<div class="arch-label">Engineering insight</div><div class="arch-note text">${d.archText}</div>`;
+  const resHTML = d.resources.map(r => `
+    <a class="resource-link" href="${r.u}" target="_blank" rel="noopener">
+      <span class="res-type-badge badge-${r.type}">${r.type === 'video' ? '▶ Video' : '📄 Article'}</span>
+      <div>
+        <div class="res-title">${r.t}</div>
+        <div class="res-meta">${r.m}</div>
+      </div>
+      <svg class="res-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+    </a>
+  `).join('');
+
+  const div = document.createElement('div');
+  div.className = 'day-card';
+  div.innerHTML = `
+    <button class="day-toggle" onclick="toggleDay(${d.day})" aria-expanded="false" aria-controls="db${d.day}">
+      <div class="day-badge c-${c}">D${d.day}</div>
+      <div class="day-info">
+        <div class="day-title">${d.topic}</div>
+        <div class="day-sub">${d.sub}</div>
+        <div class="day-tags">${tagsHTML}</div>
+      </div>
+      <svg class="chevron-icon" id="chev${d.day}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="day-body" id="db${d.day}">
+      <div class="day-body-inner">
+        <div class="intro-text">${d.article}</div>
+        <div class="section-label">Core concepts</div>
+        <div class="concepts-grid">${conceptsHTML}</div>
+        <div class="section-label">Engineering note</div>
+        ${archHTML}
+        <div class="section-label">Resources</div>
+        <div class="resources-list">${resHTML}</div>
+        <div class="section-label">Reflection prompt</div>
+        <div class="quiz-block"><div class="quiz-label">Think about it</div><p>${d.quiz}</p></div>
+      </div>
+    </div>
+  `;
+  return div;
+}
+
+function buildAllResources() {
+  const panel = document.getElementById('resources-panel');
+  const videos = DAYS.flatMap(d => d.resources.filter(r => r.type === 'video').map(r => ({ ...r, day: d.day, color: d.color })));
+  const articles = DAYS.flatMap(d => d.resources.filter(r => r.type === 'article').map(r => ({ ...r, day: d.day, color: d.color })));
+
+  function section(label, items) {
+    const cards = items.map(r => `
+      <a class="res-full-card" href="${r.u}" target="_blank" rel="noopener">
+        <div class="res-full-header">
+          <span class="res-type-badge badge-${r.type}">${r.type === 'video' ? '▶ Video' : '📄 Article'}</span>
+          <span class="res-full-day c-${r.color}" style="margin-left:auto;font-size:10px;font-weight:700;padding:2px 7px;border-radius:6px">Day ${r.day}</span>
+        </div>
+        <div class="res-full-title">${r.t}</div>
+        <div class="res-full-meta">${r.m}</div>
+      </a>
+    `).join('');
+    return `
+      <h3 style="font-size:15px;font-weight:600;color:var(--brand);margin:32px 0 14px">${label} (${items.length})</h3>
+      <div class="resources-grid">${cards}</div>
+    `;
+  }
+
+  panel.innerHTML = section('YouTube Videos', videos) + section('Articles & Official Guides', articles);
+}
+
+function toggleDay(n) {
+  const body = document.getElementById('db' + n);
+  const chev = document.getElementById('chev' + n);
+  const btn = body.previousElementSibling;
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open');
+  chev.classList.toggle('open');
+  btn.setAttribute('aria-expanded', !isOpen);
+}
+
+function showWeek(w) {
+  document.querySelectorAll('.week-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.week-tab').forEach(t => t.classList.remove('active'));
+  const panels = ['week1-panel', 'week2-panel', 'resources-panel'];
+  const idx = w === 1 ? 0 : w === 2 ? 1 : 2;
+  document.getElementById(panels[idx]).classList.add('active');
+  document.querySelectorAll('.week-tab')[idx].classList.add('active');
+}
+
+// Build
+buildOverview();
+const w1panel = document.getElementById('week1-panel');
+const w2panel = document.getElementById('week2-panel');
+DAYS.filter(d => d.week === 1).forEach(d => w1panel.appendChild(buildDayCard(d)));
+DAYS.filter(d => d.week === 2).forEach(d => w2panel.appendChild(buildDayCard(d)));
+buildAllResources();
+</script>
+</body>
+</html>
